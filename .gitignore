@@ -1,0 +1,76 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Dağıtım ve paketleme
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Sanal ortamlar (Virtual Environments)
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Çevre değişkenleri ve gizli bilgiler
+.env
+.env.local
+.env.*.local
+
+# IDE ve Editör ayarları
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# İşletim sistemi kalıntıları (özellikle macOS)
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Test ve Kod Kapsamı
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Projeye özel: Çıktı ve test görselleri / ağırlıklar
+# (Görsel işleme veya yapay zeka modelleri için)
+output/
+runs/
+*.log
+# Büyük model ağırlıkları veya geçici veri setleri kullanırsan açabilirsin:
+# *.pt
+# *.pth
+# *.onnx
+# data/
+
