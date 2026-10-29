@@ -63,14 +63,13 @@ htmlcov/
 # Jupyter Notebook
 .ipynb_checkpoints
 
-# Projeye özel: Çıktı ve test görselleri / ağırlıklar
-# (Görsel işleme veya yapay zeka modelleri için)
+# Projeye özel: Çıktı ve geçici görseller / loglar
 output/
 runs/
 *.log
-# Büyük model ağırlıkları veya geçici veri setleri kullanırsan açabilirsin:
+
+# İsteğe bağlı model ağırlıkları
 # *.pt
 # *.pth
 # *.onnx
-# data/
 
