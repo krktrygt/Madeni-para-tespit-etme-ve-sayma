@@ -1,52 +1,35 @@
 import cv2
-import numpy as np
-import os
+from para_tespit import paraları_tespit_et, sonuclari_cizdirme_sayma
 
-image_path = "/Users/korkuteryigit/Documents/MadeniParaTespit/gorsel/paralar.png"
-output_path = "/Users/korkuteryigit/Documents/MadeniParaTespit/outputs/output.png"
-img = cv2.imread(image_path)
+def main():
+    gorsel_yolu = "/Users/korkuteryigit/Documents/MadeniParaTespit/gorsel/paralar.png"
+    cikti_yolu = "/Users/korkuteryigit/Documents/MadeniParaTespit/cikti/cikti.png"
 
-if img is None:
-    print("Görsel yüklenemedi")
-    exit()
+    gorsel = cv2.imread(gorsel_yolu)
+    if gorsel is None:
+        print("Görsel yüklenemedi. Görseli kontrol et.")
+        return
 
-# Görseli gri tonlara çevirme
-grilestirme = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    daireler = paraları_tespit_et(gorsel)
 
-# Görseli blurlaştırma
-blur = cv2.GaussianBlur(grilestirme, (11, 11), 0)
+    if daireler is not None:
 
-# Daire tespiti
-daireler = cv2.HoughCircles(
-    blur,
-    cv2.HOUGH_GRADIENT,
-    dp=1.2,         # Çözünürlük tespiti
-    minDist=30,     # Mesafe algulama
-    param1=50,      # Kenar algılama hassasiyeti
-    param2=35,      # Daire olma eşik değeri
-    minRadius=15,   # En küçük para yarıçapı
-    maxRadius=60    # En büyük para yarıçapı
-)
+        islenmis_gorsel, toplam_para = sonuclari_cizdirme_sayma(gorsel, daireler)
 
-if daireler is not None:
+        print(f"Başarılı! Toplam {toplam_para} adet madeni para tespit edildi.")
 
-    daireler = np.uint16(np.around(daireler))
-    toplam_para = len(daireler[0])
-    print(f"Toplam {toplam_para} adet para tespit edildi.")
+        # Görseli outputs klasörüne kaydet
+        cv2.imwrite(cikti_yolu, islenmis_gorsel)
 
-    for i in daireler[0, :]:
-        x, y, r = i[0], i[1], i[2] # x ve ye merkez koordinat r yarıçap
+        print(f"Sonuç görseli kaydedildi: {cikti_yolu}")
+        
+        # Ekranda göster
+        cv2.imshow("Tespit Edilen Paralar", islenmis_gorsel)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+    else:
+        print("Görselde herhangi bir madeni para tespit edilemedi.")
 
-        cv2.circle(img, (x, y), r, (0, 255, 0), 2) # Daireyi çiz
 
-        cv2.circle(img, (x, y), 2, (0, 0, 255), 3) # Merkez noktası
-
-    cv2.imwrite(output_path, img) # Görseli kaydet
-    print(f"Görsel kaydedildi: {output_path}")
-
-    cv2.imshow("Tespit Edilen Paralar", img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-else:
-    print("Daire tespit edilemedi.")
-
+if __name__ == "__main__":
+    main()
